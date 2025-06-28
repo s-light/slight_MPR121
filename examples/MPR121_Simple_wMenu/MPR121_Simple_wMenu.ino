@@ -16,11 +16,11 @@
         ~ slight_MPR121
         ~ slight_DebugMenu
             written by stefan krueger (s-light),
-                github@s-light.eu, http://s-light.eu, https://github.com/s-light/
+                git@s-light.eu, http://s-light.eu, https://github.com/s-light/
             license: MIT
 
     written by stefan krueger (s-light),
-        github@s-light.eu, http://s-light.eu, https://github.com/s-light/
+        git@s-light.eu, http://s-light.eu, https://github.com/s-light/
 
     changelog / history
         16.06.2016 17:33 created (based on CAP1188_TWI_wMenu.ino)
