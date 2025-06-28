@@ -69,12 +69,13 @@ public:
     static const uint8_t NO_PIN = 255;
 
     enum twi_state_t {
-        TWI_STATE_success = 0,
-        TWI_STATE_data_to_long = 1,
-        TWI_STATE_rec_NACK_on_address = 2,
-        TWI_STATE_rec_NACK_on_data = 3,
-        TWI_STATE_other_error = 4,
-        TWI_STATE_undefined = 99,
+      TWI_STATE_success = 0,
+      TWI_STATE_data_to_long = 1,
+      TWI_STATE_rec_NACK_on_address = 2,
+      TWI_STATE_rec_NACK_on_data = 3,
+      TWI_STATE_other_error = 4,
+      TWI_STATE_timeout = 5,
+      TWI_STATE_undefined = 99,
     };
 
     // registers
@@ -391,7 +392,7 @@ public:
 
     // electrode helper
     // enum electrode_name_t {
-    //     electrode_0 = B0000000000000000,
+    //     electrode_0 = 0b0000000000000000,
     // };
     // uint8_t electrode_restrictrange(uint8_t electrode);
 
@@ -410,14 +411,14 @@ public:
     // 110   6       16us
     // 111   7       32us
     enum charge_discharge_time_t {
-        cdt_global = B00000000,
-        cdt_05us =   B00000001,
-        cdt_1us =    B00000010,
-        cdt_2us =    B00000011,
-        cdt_4us =    B00000100,
-        cdt_8us =    B00000101,
-        cdt_16us =   B00000110,
-        cdt_32us =   B00000111,
+        cdt_global = 0b00000000,
+        cdt_05us =   0b00000001,
+        cdt_1us =    0b00000010,
+        cdt_2us =    0b00000011,
+        cdt_4us =    0b00000100,
+        cdt_8us =    0b00000101,
+        cdt_16us =   0b00000110,
+        cdt_32us =   0b00000111,
     };
     static charge_discharge_time_t charge_discharge_time_convert(uint8_t);
     static void charge_discharge_time_print(
@@ -432,10 +433,10 @@ public:
     // 10   2       18
     // 11   3       34
     enum first_filter_iterations_t {
-        ffi_6 =  B00000000,
-        ffi_10 = B00000001,
-        ffi_18 = B00000010,
-        ffi_34 = B00000011,
+        ffi_6 =  0b00000000,
+        ffi_10 = 0b00000001,
+        ffi_18 = 0b00000010,
+        ffi_34 = 0b00000011,
     };
     static first_filter_iterations_t first_filter_iterations_convert(uint8_t);
     static void first_filter_iterations_print(
@@ -534,14 +535,14 @@ public:
     // 110   6       64ms
     // 111   7       128ms
     enum global_config_esi_t {
-        esi_1ms =   B00000000,
-        esi_2ms =   B00000001,
-        esi_4ms =   B00000010,
-        esi_8ms =   B00000011,
-        esi_16ms =  B00000100,
-        esi_32ms =  B00000101,
-        esi_64ms =  B00000110,
-        esi_128ms = B00000111,
+        esi_1ms =   0b00000000,
+        esi_2ms =   0b00000001,
+        esi_4ms =   0b00000010,
+        esi_8ms =   0b00000011,
+        esi_16ms =  0b00000100,
+        esi_32ms =  0b00000101,
+        esi_64ms =  0b00000110,
+        esi_128ms = 0b00000111,
     };
     global_config_esi_t global_config_electrode_sample_interval_get();
     void global_config_electrode_sample_interval_set(global_config_esi_t value);
@@ -560,10 +561,10 @@ public:
     // 10   2       10
     // 11   3       18
     enum global_config_sfi_t {
-        sfi_4 =  B00000000,
-        sfi_6 =  B00000001,
-        sfi_10 = B00000010,
-        sfi_18 = B00000011,
+        sfi_4 =  0b00000000,
+        sfi_6 =  0b00000001,
+        sfi_10 = 0b00000010,
+        sfi_18 = 0b00000011,
     };
     global_config_sfi_t global_config_second_filter_iterations_get();
     void global_config_second_filter_iterations_set(global_config_sfi_t value);
@@ -726,10 +727,10 @@ public:
     // 10 – Baseline is set to the AUTO-CONFIG baseline with the lower 3 bits cleared
     // 11 – Baseline is set to the AUTO-CONFIG baseline
     enum auto_config_bva_t {
-        baseline_not_changed = B00000000,
-        baseline_cleared = B00000001,
-        baseline_autoconfig_lower3bits_cleared = B00000010,
-        baseline_autoconfig = B00000011,
+        baseline_not_changed = 0b00000000,
+        baseline_cleared = 0b00000001,
+        baseline_autoconfig_lower3bits_cleared = 0b00000010,
+        baseline_autoconfig = 0b00000011,
     };
     // uint8_t auto_config_bva_get_raw();
     auto_config_bva_t auto_config_bva_get();
@@ -743,10 +744,10 @@ public:
     void auto_config_bva_print(Print &out);
 
     enum auto_config_retry_t {
-        retry_0 = B00000000,  // default
-        retry_2 = B00000001,
-        retry_4 = B00000010,
-        retry_8 = B00000011,
+        retry_0 = 0b00000000,  // default
+        retry_2 = 0b00000001,
+        retry_4 = 0b00000010,
+        retry_8 = 0b00000011,
     };
     auto_config_retry_t auto_config_retry_get();
     // uint8_t auto_config_retry_get();

@@ -98,6 +98,20 @@ bool slight_MPR121::begin() {
         // takes ~300ms
         soft_reset();
 
+        // check if reading form sensor is working
+        uint8_t reg_value = read_register(REG_Global_Config1);
+        // should default to 0x24 after soft_reset
+        // https://www.nxp.com/docs/en/data-sheet/MPR121.pdf#page=14&zoom=180,-292,767
+        if (reg_value != 0x24) {
+            Serial.println("reading from MPR121 register returned wrong value: ");
+            Serial.println("  expected: 0x24");
+            Serial.print("  read: 0x");
+            Serial.print(reg_value);
+            Serial.println("");
+            ready = false;
+            return false;
+        }
+
         configuration_load_defaults();
     }
     return ready;
@@ -112,8 +126,8 @@ void slight_MPR121::configuration_load_defaults() {
     // calculate and set auto config values for 3.3V
     auto_config_calculate_values_and_set(33);
     // setup auto config to enabled with good defaults
-    auto_config_load_recommend_config();
-    // auto_config_load_recommend_config(&Serial);
+    // auto_config_load_recommend_config();
+    auto_config_load_recommend_config(&Serial);
 }
 
 
@@ -1515,7 +1529,7 @@ void slight_MPR121::auto_config_load_recommend_config(Print *out)  {
     first_filter_iterations_t ffi_value = slight_MPR121::ffi_6;
     global_config_first_filter_iterations_set(ffi_value);
 
-    // electrode smaple interavl default is 16ms
+    // electrode sample interval default is 16ms
     global_config_electrode_sample_interval_set(slight_MPR121::esi_16ms);
     // second filter iterations default is 6 samples
     global_config_second_filter_iterations_set(slight_MPR121::sfi_6);
@@ -1599,7 +1613,7 @@ void slight_MPR121::gpio_pwm_set(uint8_t gpio, uint8_t value) {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Helpers / Allow Writes
 void slight_MPR121::switch_mode_temporarily_to_allow_write() {
-    Serial.println(F("switch_mode_temporarily_to_allow_write"));
+    // Serial.println(F("switch_mode_temporarily_to_allow_write"));
     switch_mode_backup_electrode_config = read_register(
         REG_Electrode_Configuration
     );
@@ -1610,7 +1624,7 @@ void slight_MPR121::switch_mode_temporarily_to_allow_write() {
 }
 
 void slight_MPR121::switch_mode_restore() {
-    Serial.println(F("switch_mode_restore"));
+    // Serial.println(F("switch_mode_restore"));
     write_register(
         REG_Electrode_Configuration,
         switch_mode_backup_electrode_config
@@ -1764,7 +1778,7 @@ uint8_t slight_MPR121::read_register(uint8_t reg_name) {
             Wire.requestFrom(twi_address, (uint8_t)1);
             result_value = Wire.read();
         } else {
-            // print_transmission_state(Serial, twi_state);
+            print_transmission_state(Serial, twi_state);
         }
     }
     return result_value;
@@ -1789,7 +1803,7 @@ uint16_t slight_MPR121::read_register16bit(uint8_t reg_name) {
             uint16_t highbyte = ((uint16_t)Wire.read()) << 8;
             result_value |= highbyte;
         } else {
-            // print_transmission_state(Serial, twi_state);
+            print_transmission_state(Serial, twi_state);
         }
     }
     return result_value;

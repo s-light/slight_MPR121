@@ -1,5 +1,18 @@
-# local only information
-no_git_sync
+# arduino IDE build
+build
+
+# Notepad++ backups
+*.bak
+**/nppBackup
+
+# manual backups
+**/old
+*.zip
+
+# only for this project - no old info files...
+infos.ods
+
+## C & CPP things
 
 # Compiled Object files
 *.slo
@@ -18,7 +31,6 @@ no_git_sync
 
 # Fortran module files
 *.mod
-*.smod
 
 # Compiled Static libraries
 *.lai
@@ -30,3 +42,47 @@ no_git_sync
 *.exe
 *.out
 *.app
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
