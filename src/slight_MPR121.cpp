@@ -1778,7 +1778,7 @@ uint8_t slight_MPR121::read_register(uint8_t reg_name) {
             Wire.requestFrom(twi_address, (uint8_t)1);
             result_value = Wire.read();
         } else {
-            print_transmission_state(Serial, twi_state);
+            twi_state_print(Serial, twi_state);
         }
     }
     return result_value;
@@ -1803,7 +1803,7 @@ uint16_t slight_MPR121::read_register16bit(uint8_t reg_name) {
             uint16_t highbyte = ((uint16_t)Wire.read()) << 8;
             result_value |= highbyte;
         } else {
-            print_transmission_state(Serial, twi_state);
+            twi_state_print(Serial, twi_state);
         }
     }
     return result_value;
@@ -1825,7 +1825,7 @@ void slight_MPR121::write_register(uint8_t reg_name, uint8_t value) {
         if (twi_state == TWI_STATE_success) {
             // all fine.
         } else {
-            // print_transmission_state(Serial, twi_state);
+            twi_state_print(Serial, twi_state);
         }
     }
 }
